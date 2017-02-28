@@ -11,8 +11,16 @@
 任务完成效果 [查看](http://chenliwen.tech/IFE2017/binbin/task01/index.html)
 
 
-### 任务一：零基础JavaScript编码（一）
+### 任务二：零基础JavaScript编码（一）
 
 页面加载后，将提供的空气质量数据数组，按照某种逻辑（比如空气质量大于60）进行过滤筛选，最后将符合条件的数据按照一定的格式要求显示在网页上
 
 任务完成效果 [查看](http://chenliwen.tech/IFE2017/binbin/task02/index.html)
+
+
+### 任务三：零基础JavaScript编码（一）
+
+读取页面上已有的source列表，从中提取出城市以及对应的空气质量
+将数据按照某种顺序排序后，在resort列表中按照顺序显示出来
+
+任务完成效果 [查看](http://chenliwen.tech/IFE2017/binbin/task03/index.html)
