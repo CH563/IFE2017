@@ -1,0 +1,178 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+    <style type="text/css">
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      .form {
+        text-align: center;
+        padding: 10px;
+      }
+      .input-val{
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        line-height: 32px;
+        width: 200px;
+        text-align: center;
+        font-size: 18px;
+        -webkit-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+      }
+      .input-val:focus{
+        width: 220px;
+      }
+      .btn{
+        border-bottom: 1px solid #eee;
+        text-align: center;
+        padding: 0 10px 10px;
+        font-size: 0;
+      }
+      .btn button{
+        display: inline-block;
+        border: none;
+        border: 1px solid #ccc;
+        background: #fff;
+        padding: 10px;
+        color: #666;
+        border-radius: 5px;
+        font-size: 12px;
+        margin: 0 5px;
+        cursor: pointer;
+        box-shadow: 2px 2px 2px #ddd;
+      }
+      .list {
+        text-align: center;
+        padding: 10px;
+        font-size: 0;
+      }
+      .list li {
+        display: inline-block;
+        border-radius: 10px;
+        line-height: 40px;
+        color: #fff;
+        padding: 0 15px;
+        background: #0399f9;
+        font-size: 14px;
+        font-weight: 600;
+        margin: 5px;
+        opacity: 0;
+        cursor: pointer;
+        -webkit-transform: scale(0);
+        -ms-transform: scale(0);
+        -o-transform: scale(0);
+        transform: scale(0);
+        -webkit-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+      }
+      .list li.show {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+      }
+    </style>
+  </head>
+<body>
+<div class="form">
+  <input type="text" value="" placeholder="请输入数字" id="val" class="input-val">
+</div>
+<div class="btn">
+  <button id="leftIn">左侧入</button>
+  <button id="rightIn">右侧入</button>
+  <button id="leftOut">左侧出</button>
+  <button id="rightOut">右侧出</button>
+</div>
+<ul id="list" class="list">
+</ul>
+<script type="text/javascript">
+  var leftIn = document.getElementById("leftIn"),
+      rightIn = document.getElementById("rightIn"),
+      leftOut = document.getElementById("leftOut"),
+      rightOut = document.getElementById("rightOut"),
+      val = document.getElementById("val"),
+      list = document.getElementById("list"),
+      li = list.getElementsByTagName("li");
+  //获取输入值
+  var getVal = function(){
+    //利用正则验证数字
+    if(/\d+/.test(val.value)){
+      return parseInt(val.value.trim());
+    }else{
+      alert("请输入数字！");
+    }
+  };
+  //左侧入
+  leftIn.onclick = function(){
+    if(getVal()){
+      var item = document.createElement("li");
+      item.innerHTML = getVal();
+      item.addEventListener("click",del,false);
+      list.insertBefore(item,li[0]);
+      //利用setTimeout对transition才有作用
+      setTimeout(function(){
+        //过渡动画
+        item.setAttribute("class","show");
+      })
+    }
+  };
+  //右侧入
+  rightIn.onclick = function(){
+    if(getVal()){
+      var item = document.createElement("li");
+      item.innerHTML = getVal();
+      item.addEventListener("click",del,false);
+      list.appendChild(item);
+      setTimeout(function(){
+        item.setAttribute("class","show");
+      })
+    }
+  };
+  //左侧出
+  leftOut.onclick = function(){
+    if(li.length > 0){
+      li[0].removeAttribute("class");
+      setTimeout(function(){
+        list.removeChild(li[0]);
+      },300)
+    }else{
+      alert("没有了！")
+    }
+  };
+  //右侧出
+  rightOut.onclick = function(){
+    if(li.length > 0){
+      li[li.length-1].removeAttribute("class");
+      setTimeout(function(){
+        list.removeChild(li[li.length-1]);
+      },300)
+    }else{
+      alert("没有了！")
+    }
+  };
+  //删除方法
+  var del = function(){
+      var _this = this;
+      _this.removeAttribute("class")
+      setTimeout(function(){
+        _this.remove();
+      },300)
+  }
+  // for(var i=0; i<li.length; i++){
+  //   li[i].addEventListener("click",function(){
+  //       var _this = this;
+  //       _this.removeAttribute("class")
+  //       setTimeout(function(){
+  //         list.removeChild(_this);
+  //       },300)
+  //     },false)
+  //   }
+</script>
+</body>
+</html>
