@@ -6,7 +6,7 @@
 
 ### 任务一：零基础JavaScript编码（一）
 
-本任务完成的功能为：用户可以在输入框中输入任何内容，点击“确认填写”按钮后，用户输入的内容会显示在“您输入的值是”文字的右边
+在输入框中输入任何内容，点击“确认填写”按钮后，用户输入的内容会显示在“您输入的值是”文字的右边
 
 [任务完成效果](http://chenliwen.tech/IFE2017/binbin/task01/index.html)   |   [源码查看](https://github.com/CH563/IFE2017/blob/master/binbin/task01/index.html)
 
@@ -38,3 +38,16 @@
 点击队列中任何一个元素，则该元素会被从队列中删除
 
 [任务完成效果](http://chenliwen.tech/IFE2017/binbin/task04/index.html)   |   [源码查看](https://github.com/CH563/IFE2017/blob/master/binbin/task04/index.html)
+
+
+### 任务五：基础JavaScript练习（二）
+
+有一个input输入框，以及4个操作按钮
+
+- 基于上一任务
+- 限制输入的数字在10-100
+- 队列元素数量最多限制为60个
+- 队列展现方式变化，直接用高度表示数字大小
+- 实现冒泡排序用可视化的方法表达出来
+
+[任务完成效果](http://chenliwen.tech/IFE2017/binbin/task05/index.html)   |   [源码查看](https://github.com/CH563/IFE2017/blob/master/binbin/task05/index.html)

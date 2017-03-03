@@ -1,0 +1,249 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+    <style type="text/css">
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      .form {
+        text-align: center;
+        padding: 10px;
+      }
+      .input-val{
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        line-height: 32px;
+        width: 200px;
+        text-align: center;
+        font-size: 18px;
+        -webkit-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+      }
+      .input-val:focus{
+        width: 220px;
+      }
+      .btn{
+        border-bottom: 1px solid #eee;
+        text-align: center;
+        padding: 0 10px 10px;
+        font-size: 0;
+      }
+      .btn button{
+        display: inline-block;
+        border: none;
+        border: 1px solid #ccc;
+        background: #fff;
+        padding: 10px;
+        color: #666;
+        border-radius: 5px;
+        font-size: 12px;
+        margin: 0 5px;
+        cursor: pointer;
+        box-shadow: 2px 2px 2px #ddd;
+      }
+      .btn button:last-child{
+        background: #01a814;
+        color: #fff;
+      }
+      .list {
+        padding: 40px 10px 0;
+        font-size: 0;
+        height: 150px;
+        border-bottom: 1px solid #8ebeef;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        -ms-align-items: flex-end;
+        align-items: flex-end;
+        justify-content: center;
+        background: #f8fbff;
+      }
+      .list li {
+        display: block;
+        position: relative;
+        color: #fff;
+        border:1px solid #8ebeef;
+        border-bottom: 0;
+        background: #d4e9ff;
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+        width: 0;
+        height: 0;
+        -webkit-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+      }
+      .list li span{
+        display: block;
+        position: absolute;
+        font-size: 12px;
+        top: -24px;
+        line-height: 24px;
+        width: 60px;
+        text-align: center;
+        left: 50%;
+        margin-left: -30px;
+        color: #0399f9;
+        -webkit-transform: scale(0);
+        -ms-transform: scale(0);
+        -o-transform: scale(0);
+        transform: scale(0);
+        -webkit-transition: all .3s .2s;
+        -o-transition: all .3s .2s;
+        transition: all .3s .2s;
+      }
+      .list li.show {
+        opacity: 1;
+        width: 20px;
+        margin: 0 5px;
+      }
+      .list li.show span{
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
+      }
+    </style>
+  </head>
+<body>
+<div class="form">
+  <input type="text" value="" placeholder="请输入数字" id="val" class="input-val">
+</div>
+<div class="btn">
+  <button id="leftIn">左侧入</button>
+  <button id="rightIn">右侧入</button>
+  <button id="leftOut">左侧出</button>
+  <button id="rightOut">右侧出</button>
+  <button id="toSort">排序</button>
+</div>
+<ul id="list" class="list">
+</ul>
+<script type="text/javascript">
+  var leftIn = document.getElementById("leftIn"),
+      rightIn = document.getElementById("rightIn"),
+      leftOut = document.getElementById("leftOut"),
+      rightOut = document.getElementById("rightOut"),
+      toSort = document.getElementById("toSort"),
+      val = document.getElementById("val"),
+      list = document.getElementById("list"),
+      li = list.getElementsByTagName("li"),
+      arr = [];
+  //获取输入值
+  var getVal = function(){
+    //利用正则验证数字
+    if(/\d+/.test(val.value)){
+      var rulst = parseInt(val.value.trim());
+      if(rulst >= 10 && rulst <= 100){
+        return rulst;
+      }else{
+        alert("请输入10到100的数字!")
+      }
+    }else{
+      alert("请输入数字！");
+    }
+  };
+  //左侧入
+  leftIn.onclick = function(){
+    if(li.length <= 60){
+      if(getVal()){
+        var item = document.createElement("li");
+        item.innerHTML = "<span>"+getVal()+"</span>";
+        item.addEventListener("click",del,false);
+        list.insertBefore(item,li[0]);
+        //利用setTimeout对transition才有作用
+        setTimeout(function(){
+          //过渡动画
+          item.setAttribute("class","show");
+          item.style.height=getVal()+"px";
+        });
+      }
+    }else{
+      alert("太多了，消停会吧~")
+    }
+  };
+  //右侧入
+  rightIn.onclick = function(){
+    if(li.length <= 60){
+      if(getVal()){
+        var item = document.createElement("li");
+        item.innerHTML = "<span>"+getVal()+"</span>";
+        item.addEventListener("click",del,false);
+        list.appendChild(item);
+        setTimeout(function(){
+          item.setAttribute("class","show");
+          item.style.height=getVal()+"px";
+        })
+      }
+    }else{
+      alert("太多了，消停会吧~")
+    }
+  };
+  //左侧出
+  leftOut.onclick = function(){
+    if(li.length > 0){
+      li[0].removeAttribute("style");
+      li[0].removeAttribute("class");
+      setTimeout(function(){
+        list.removeChild(li[0]);
+      },300)
+    }else{
+      alert("没有了！")
+    }
+  };
+  //右侧出
+  rightOut.onclick = function(){
+    if(li.length > 0){
+      li[li.length-1].removeAttribute("style");
+      li[li.length-1].removeAttribute("class");
+      setTimeout(function(){
+        list.removeChild(li[li.length-1]);
+      },300)
+    }else{
+      alert("没有了！")
+    }
+  };
+  //删除方法
+  var del = function(){
+      var _this = this;
+      _this.removeAttribute("style")
+      _this.removeAttribute("class")
+      setTimeout(function(){
+        _this.remove();
+      },300)
+  };
+  //排序
+  toSort.onclick = function(){
+    if(li.length > 1){
+      var i = li.length;
+      var exchangVal;
+      while(i>1){
+        for(var j=0; j < i-1; j++){
+          //两两对比，冒泡排序
+          if(parseInt(li[j].textContent) > parseInt(li[j+1].textContent)){
+            exchangVal = li[j].textContent;
+            li[j].innerHTML = "<span>"+li[j+1].textContent+"</span>";
+            li[j].style.height=parseInt(li[j+1].textContent) + "px";
+            li[j+1].innerHTML = "<span>"+exchangVal+"</span>";
+            li[j+1].style.height=parseInt(exchangVal) + "px";
+          }
+        }
+        i--
+      }
+    }else if(li.length == 1){
+      alert("才一个，跟谁排~")
+    }else{
+      alert("没有，怎么排~")
+    }
+  };
+</script>
+</body>
+</html>
