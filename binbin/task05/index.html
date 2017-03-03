@@ -86,17 +86,14 @@
         display: block;
         position: absolute;
         font-size: 12px;
-        top: -24px;
+        top: -34px;
         line-height: 24px;
         width: 60px;
         text-align: center;
         left: 50%;
         margin-left: -30px;
         color: #0399f9;
-        -webkit-transform: scale(0);
-        -ms-transform: scale(0);
-        -o-transform: scale(0);
-        transform: scale(0);
+        opacity: 0;
         -webkit-transition: all .3s .2s;
         -o-transition: all .3s .2s;
         transition: all .3s .2s;
@@ -107,10 +104,8 @@
         margin: 0 5px;
       }
       .list li.show span{
-        -webkit-transform: scale(1);
-        -ms-transform: scale(1);
-        -o-transform: scale(1);
-        transform: scale(1);
+        opacity: 1;
+        top: -24px;
       }
     </style>
   </head>
@@ -123,20 +118,15 @@
   <button id="rightIn">右侧入</button>
   <button id="leftOut">左侧出</button>
   <button id="rightOut">右侧出</button>
-  <button id="toSort">排序</button>
+  <button id="toSort" data-sort="1">排序</button>
 </div>
 <ul id="list" class="list">
 </ul>
 <script type="text/javascript">
-  var leftIn = document.getElementById("leftIn"),
-      rightIn = document.getElementById("rightIn"),
-      leftOut = document.getElementById("leftOut"),
-      rightOut = document.getElementById("rightOut"),
-      toSort = document.getElementById("toSort"),
+  var toSort = document.getElementById("toSort"),
       val = document.getElementById("val"),
       list = document.getElementById("list"),
-      li = list.getElementsByTagName("li"),
-      arr = [];
+      li = list.getElementsByTagName("li");
   //获取输入值
   var getVal = function(){
     //利用正则验证数字
@@ -151,64 +141,48 @@
       alert("请输入数字！");
     }
   };
-  //左侧入
-  leftIn.onclick = function(){
-    if(li.length <= 60){
-      if(getVal()){
-        var item = document.createElement("li");
-        item.innerHTML = "<span>"+getVal()+"</span>";
-        item.addEventListener("click",del,false);
-        list.insertBefore(item,li[0]);
-        //利用setTimeout对transition才有作用
-        setTimeout(function(){
-          //过渡动画
-          item.setAttribute("class","show");
-          item.style.height=getVal()+"px";
-        });
+  //加入方法
+  var enterIn = function(btn){
+    document.getElementById(btn).onclick=function(){
+      if(li.length <= 60){
+        if(getVal()){
+          var item = document.createElement("li");
+          item.innerHTML = "<span>"+getVal()+"</span>";
+          item.addEventListener("click",del,false);
+          if(btn =="leftIn"){
+            list.insertBefore(item,li[0]);
+          }else if(btn =="rightIn"){
+            list.appendChild(item);
+          };
+          //利用setTimeout对transition才有作用
+          setTimeout(function(){
+            //过渡动画
+            item.setAttribute("class","show");
+            item.style.height=getVal()+"px";
+          });
+        }
+      }else{
+        alert("太多了，消停会吧~")
       }
-    }else{
-      alert("太多了，消停会吧~")
     }
   };
-  //右侧入
-  rightIn.onclick = function(){
-    if(li.length <= 60){
-      if(getVal()){
-        var item = document.createElement("li");
-        item.innerHTML = "<span>"+getVal()+"</span>";
-        item.addEventListener("click",del,false);
-        list.appendChild(item);
+  //删除方法
+  var delOut = function(btn){
+    document.getElementById(btn).onclick=function(){
+      if(li.length > 0){
+        if(btn == "leftOut"){
+          el = li[0];
+        }else if(btn == "rightOut"){
+          el = li[li.length-1]
+        }
+        el.removeAttribute("style");
+        el.removeAttribute("class");
         setTimeout(function(){
-          item.setAttribute("class","show");
-          item.style.height=getVal()+"px";
-        })
+          list.removeChild(el);
+        },300)
+      }else{
+        alert("没有了！")
       }
-    }else{
-      alert("太多了，消停会吧~")
-    }
-  };
-  //左侧出
-  leftOut.onclick = function(){
-    if(li.length > 0){
-      li[0].removeAttribute("style");
-      li[0].removeAttribute("class");
-      setTimeout(function(){
-        list.removeChild(li[0]);
-      },300)
-    }else{
-      alert("没有了！")
-    }
-  };
-  //右侧出
-  rightOut.onclick = function(){
-    if(li.length > 0){
-      li[li.length-1].removeAttribute("style");
-      li[li.length-1].removeAttribute("class");
-      setTimeout(function(){
-        list.removeChild(li[li.length-1]);
-      },300)
-    }else{
-      alert("没有了！")
     }
   };
   //删除方法
@@ -220,23 +194,49 @@
         _this.remove();
       },300)
   };
+  //左侧入
+  enterIn("leftIn");
+  //右侧入
+  enterIn("rightIn");
+  //左侧出
+  delOut("leftOut");
+  //右侧出
+  delOut("rightOut");
   //排序
   toSort.onclick = function(){
     if(li.length > 1){
       var i = li.length;
       var exchangVal;
-      while(i>1){
-        for(var j=0; j < i-1; j++){
-          //两两对比，冒泡排序
-          if(parseInt(li[j].textContent) > parseInt(li[j+1].textContent)){
-            exchangVal = li[j].textContent;
-            li[j].innerHTML = "<span>"+li[j+1].textContent+"</span>";
-            li[j].style.height=parseInt(li[j+1].textContent) + "px";
-            li[j+1].innerHTML = "<span>"+exchangVal+"</span>";
-            li[j+1].style.height=parseInt(exchangVal) + "px";
+      if(this.getAttribute("data-sort") == 1){
+        this.setAttribute("data-sort",2);
+        while(i>1){
+          for(var j=0; j < i-1; j++){
+            //两两对比，冒泡排序
+            if(parseInt(li[j].textContent) > parseInt(li[j+1].textContent)){
+              exchangVal = li[j].textContent;
+              li[j].innerHTML = "<span>"+li[j+1].textContent+"</span>";
+              li[j].style.height=parseInt(li[j+1].textContent) + "px";
+              li[j+1].innerHTML = "<span>"+exchangVal+"</span>";
+              li[j+1].style.height=parseInt(exchangVal) + "px";
+            }
           }
-        }
-        i--
+          i--
+        };
+      }else if(this.getAttribute("data-sort") == 2){
+        this.setAttribute("data-sort",1);
+        while(i>1){
+          for(var j=0; j < i-1; j++){
+            //两两对比，冒泡排序
+            if(parseInt(li[j].textContent) < parseInt(li[j+1].textContent)){
+              exchangVal = li[j].textContent;
+              li[j].innerHTML = "<span>"+li[j+1].textContent+"</span>";
+              li[j].style.height=parseInt(li[j+1].textContent) + "px";
+              li[j+1].innerHTML = "<span>"+exchangVal+"</span>";
+              li[j+1].style.height=parseInt(exchangVal) + "px";
+            }
+          }
+          i--
+        };
       }
     }else if(li.length == 1){
       alert("才一个，跟谁排~")
