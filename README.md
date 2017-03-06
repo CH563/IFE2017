@@ -51,3 +51,17 @@
 - 实现冒泡排序用可视化的方法表达出来
 
 [任务完成效果](http://chenliwen.tech/IFE2017/binbin/task05/index.html)   |   [源码查看](https://github.com/CH563/IFE2017/blob/master/binbin/task05/index.html)
+
+### 任务六：基础JavaScript练习（三）
+
+有一个input输入框，以及4个操作按钮
+
+- 基于任务四进行升级
+- 将新元素输入框从input改为textarea
+- 一次批量输入多个内容，格式可以为数字、中文、英文等，可以通过用回车，逗号（全角半角均可），顿号，空格（全角半角、Tab等均可）等符号作为不同内容的间隔
+- 添加查询词在各个元素内容中模糊匹配，匹配到的内容标红，不匹配暂时隐藏
+- 一个都匹配不到时，提示
+
+** 遇到问题：大小时匹配时，分别对大小写相应标红，替换不成功 **
+
+[任务完成效果](http://chenliwen.tech/IFE2017/binbin/task06/index.html)   |   [源码查看](https://github.com/CH563/IFE2017/blob/master/binbin/task06/index.html)

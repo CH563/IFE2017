@@ -1,0 +1,280 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 06</title>
+    <style type="text/css">
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      .form {
+        text-align: center;
+        padding: 10px;
+      }
+      .input-val{
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        line-height: 24px;
+        width: 400px;
+        height: 120px;
+        font-size: 16px;
+        -webkit-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+      }
+      .input-val:focus{
+        width: 410px;
+      }
+      .btn{
+        border-bottom: 1px solid #eee;
+        text-align: center;
+        padding: 0 10px 10px;
+        font-size: 0;
+      }
+      .btn button{
+        display: inline-block;
+        border: none;
+        border: 1px solid #ccc;
+        background: #fff;
+        padding: 10px;
+        color: #666;
+        border-radius: 5px;
+        font-size: 12px;
+        margin: 0 5px;
+        cursor: pointer;
+        box-shadow: 2px 2px 2px #ddd;
+      }
+      .list {
+        text-align: center;
+        padding: 10px;
+        font-size: 0;
+      }
+      .list li {
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        line-height: 40px;
+        color: #666;
+        padding:0;
+        background: #fff;
+        font-size: 14px;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+        -webkit-transform: scale(0);
+        -ms-transform: scale(0);
+        -o-transform: scale(0);
+        transform: scale(0);
+        -webkit-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+      }
+      .list li.show {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+        padding: 0 15px;
+        margin: 5px;
+      }
+      .list li.hide{
+        display: none;
+      }
+      .list li span{
+        color: #ff0000;
+      }
+      .list p.tip{
+        border: none;
+        width: 100%;
+        display: block;
+        color: #999;
+        font-size: 12px;
+        text-align: center;
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+      }
+      .search{
+        text-align: center;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        font-size: 0;
+      }
+      .search label{
+        display: inline-block;
+        font-size: 14px;
+        color: #999;
+      }
+      .search input{
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 0 10px;
+        line-height: 24px;
+        width: 200px;
+        font-size: 14px;
+      }
+      .search button{
+        display: inline-block;
+        border: none;
+        border: 1px solid #ccc;
+        background: #07be18;
+        padding: 5px 20px;
+        color: #fff;
+        border-radius: 5px;
+        font-size: 12px;
+        margin: 0 5px;
+        cursor: pointer;
+        box-shadow: 2px 2px 2px #ddd;
+      }
+    </style>
+  </head>
+<body>
+<div class="form">
+<textarea placeholder="请输入" id="val" class="input-val"></textarea>
+</div>
+<div class="btn">
+  <button id="leftIn">左侧入</button>
+  <button id="rightIn">右侧入</button>
+  <button id="leftOut">左侧出</button>
+  <button id="rightOut">右侧出</button>
+</div>
+<div class="search">
+  <label>搜索</label>
+  <input type="text" placeholder="请输入关键字..." value="" id="sVal">
+  <button id="sBtn">搜索</button>
+</div>
+<ul id="list" class="list">
+  <li class="show">小明</li>
+  <li class="show">小红</li>
+  <li class="show">大明</li>
+  <li class="show">大红</li>
+</ul>
+<script type="text/javascript">
+  var val = document.getElementById("val"),
+      list = document.getElementById("list"),
+      li = list.getElementsByTagName("li"),
+      sVal = document.getElementById("sVal"),
+      sBtn = document.getElementById("sBtn"),
+      reg = /[\w\u4e00-\u9fa5]+/;
+  //过滤输入值
+  var num = function(value){
+    return reg.test(value)
+  }
+  //获取输入值
+  var getVal = function(){
+    //是否输入
+    if(reg.test(val.value.trim())){
+      return val.value.trim().split(/-|,|，|、| |\n|\t/).filter(num);
+    }else{
+      alert("请输入内容！");
+    }
+  };
+  //输入
+  var enterIn = function(btn){
+    document.getElementById(btn).onclick=function(){
+      if(getVal()){
+        console.log(getVal())
+        for(var i=0;i<getVal().length;i++){
+          var item = document.createElement("li");
+          item.innerHTML = getVal()[i];
+          //绑定自删方法
+          item.addEventListener("click",del,false);
+          if(btn == "leftIn"){
+            list.insertBefore(item,li[0]);
+          }else if(btn == "rightIn"){
+            list.appendChild(item);
+          }
+          item.setAttribute("class","show");
+        }
+      }
+    }
+  }
+  //删除
+  var delOut = function(btn){
+    document.getElementById(btn).onclick=function(){
+      if(li.length > 0){
+        if(btn == "leftOut"){
+          el = li[0];
+        }else if(btn == "rightOut"){
+          el = li[li.length-1]
+        }
+        el.removeAttribute("class");
+        setTimeout(function(){
+          list.removeChild(el);
+        },300)
+      }else{
+        alert("没有了！")
+      }
+    }
+  }
+  //自删
+  var del = function(){
+      var _this = this;
+      _this.removeAttribute("class")
+      setTimeout(function(){
+        _this.remove();
+      },300)
+  }
+  //默认删除
+  for(var i=0; i<li.length; i++){
+    li[i].addEventListener("click",function(){
+        var _this = this;
+        _this.removeAttribute("class")
+        setTimeout(function(){
+          list.removeChild(_this);
+        },300)
+      },false)
+    }
+  //搜索
+  var search = function(){
+    for(var i = 0; i<li.length; i++){
+      //匹配关键字
+      if(li[i].textContent.toLowerCase().indexOf(sVal.value.toLowerCase()) !== -1){
+        if(!!list.getElementsByClassName("tip")[0]){
+          list.removeChild(list.getElementsByClassName("tip")[0])
+        }
+        //显示匹配
+        li[i].className="show";
+        //标记关键字
+        li[i].innerHTML = li[i].textContent.replace(sVal.value, "<span>"+sVal.value+"</span>");
+      }else{
+        //隐藏不匹配
+        li[i].className="hide";
+      }
+    }
+    //搜不到时，提示语
+    var show = list.getElementsByClassName("show");
+    if(show.length < 1){
+      //判读是否有提示，防止重复添加
+      if(!!!list.getElementsByClassName("tip")[0]){
+        var tip = document.createElement("p");
+            tip.innerHTML = "没相关的，换个关键字试下吧~";
+            tip.setAttribute("class","tip");
+            list.appendChild(tip);
+      }
+    }
+  }
+  //左侧入
+  enterIn("leftIn");
+  //右侧入
+  enterIn("rightIn");
+  //左侧出
+  delOut("leftOut");
+  //右侧出
+  delOut("rightOut");
+  //搜索
+  sBtn.onclick = search;
+  sVal.onkeyup = function(){
+    if(event.keyCode === 13){
+      search();
+    }
+  }
+</script>
+</body>
+</html>
