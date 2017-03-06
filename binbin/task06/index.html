@@ -132,11 +132,15 @@
         cursor: pointer;
         box-shadow: 2px 2px 2px #ddd;
       }
+      .search button:last-child{
+        background: #fff;
+        color: #666;
+      }
     </style>
   </head>
 <body>
 <div class="form">
-<textarea placeholder="请输入" id="val" class="input-val"></textarea>
+<textarea placeholder="请输入多个值..." id="val" class="input-val"></textarea>
 </div>
 <div class="btn">
   <button id="leftIn">左侧入</button>
@@ -148,6 +152,7 @@
   <label>搜索</label>
   <input type="text" placeholder="请输入关键字..." value="" id="sVal">
   <button id="sBtn">搜索</button>
+  <button id="sRest">全部</button>
 </div>
 <ul id="list" class="list">
   <li class="show">小明</li>
@@ -161,6 +166,7 @@
       li = list.getElementsByTagName("li"),
       sVal = document.getElementById("sVal"),
       sBtn = document.getElementById("sBtn"),
+      sRest = document.getElementById("sRest"),
       reg = /[\w\u4e00-\u9fa5]+/;
   //过滤输入值
   var num = function(value){
@@ -178,6 +184,7 @@
   //输入
   var enterIn = function(btn){
     document.getElementById(btn).onclick=function(){
+      rest();
       if(getVal()){
         console.log(getVal())
         for(var i=0;i<getVal().length;i++){
@@ -198,6 +205,7 @@
   //删除
   var delOut = function(btn){
     document.getElementById(btn).onclick=function(){
+      rest();
       if(li.length > 0){
         if(btn == "leftOut"){
           el = li[0];
@@ -221,7 +229,7 @@
         _this.remove();
       },300)
   }
-  //默认删除
+  //默认删除，给小明，小红，大明，大红用的
   for(var i=0; i<li.length; i++){
     li[i].addEventListener("click",function(){
         var _this = this;
@@ -260,6 +268,18 @@
       }
     }
   }
+  //重置
+  var rest = function(){
+    var aa="";
+    sVal.value="";
+    if(!!list.getElementsByClassName("tip")[0]){
+      list.removeChild(list.getElementsByClassName("tip")[0])
+    }
+    for(var i = 0; i<li.length; i++){
+      aa +="<li class=\"show\">"+li[i].textContent+"</li>"
+    }
+    list.innerHTML=aa;
+  }
   //左侧入
   enterIn("leftIn");
   //右侧入
@@ -275,6 +295,7 @@
       search();
     }
   }
+  sRest.onclick = rest;
 </script>
 </body>
 </html>
