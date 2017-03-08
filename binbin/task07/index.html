@@ -20,15 +20,20 @@
 </div>
 <div class="btn">
   <button id="btn01">前序</button>
-  <!-- <button id="btn02">中序</button>
-  <button id="btn03">后序</button> -->
+  <button id="btn02">中序</button>
+  <button id="btn03">后序</button>
 </div>
 <script type="text/javascript">
+  /*
+    前序用了查找DOM来变化，中后序参考了其他同学的方法，简洁明了多。
+    对算法还是不够熟练，想法都是停留在控制DOM，代码不够简洁。还是要多REVIEW别人代码来学习改进。
+  */
   var tree = document.getElementById("tree"),
       btn = document.getElementsByClassName("btn")[0],
       btn01 = document.getElementById("btn01"),
       btn02 = document.getElementById("btn02"),
-      btn03 = document.getElementById("btn03");
+      btn03 = document.getElementById("btn03"),
+      index;//设个序号
   //前序遍历
   var fontEach = function(el){
     if(!!el){
@@ -57,25 +62,58 @@
       },500);
     }
   };
+
+  //根据查找顺序来播放背景色变化===================================
+
   //中序遍历
   var middleEach = function(el){
     if(!!el){
-      if(!!el.firstElementChild){
-        middleEach(el.firstElementChild)
-      }else{
-        el.style.background="green";
-        setTimeout(function(){
-          el.removeAttribute("style");
-        },500)
-      }
+      middleEach(el.firstElementChild)
+      changeColor(el);
+      middleEach(el.lastElementChild)
     }
   };
+  //后序遍历
+  var afterEach = function(el){
+    if(!!el){
+      afterEach(el.firstElementChild)
+      afterEach(el.lastElementChild)
+      changeColor(el);
+    }
+  };
+  //颜色变化动画
+  function changeColor(el){
+    setTimeout(function(){
+      el.style.background="#14a4f7";
+    },index*500);//跟据遍历顺序来延迟时间
+    setTimeout(function(){
+      el.removeAttribute("style");
+    },(++index)*500);//跟据遍历顺序来延迟时间
+  }
+  //前序调用
   btn01.onclick = function(){
     fontEach(tree);
   }
-  // btn02.onclick = function(){
-  //   middleEach(tree);
-  // }
+  //中序调用
+  btn02.onclick = function(){
+    //禁用按钮
+    btn.className = "btn disabled";
+    index=0;//重置序号
+    middleEach(tree);
+    //播放完释放按钮
+    setTimeout(function(){
+      btn.className = "btn";
+    },index*500)
+  }
+  //后序调用
+  btn03.onclick = function(){
+    btn.className = "btn disabled";
+    index=0;//重置序号
+    afterEach(tree);
+    setTimeout(function(){
+      btn.className = "btn";
+    },index*500)
+  }
 </script>
 </body>
 </html>
