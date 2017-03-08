@@ -20,8 +20,8 @@
 </div>
 <div class="btn">
   <button id="btn01">前序</button>
-  <button id="btn02">中序</button>
-  <button id="btn03">后序</button>
+  <!-- <button id="btn02">中序</button>
+  <button id="btn03">后序</button> -->
 </div>
 <script type="text/javascript">
   var tree = document.getElementById("tree"),
@@ -66,13 +66,6 @@
         el.style.background="green";
         setTimeout(function(){
           el.removeAttribute("style");
-          if(!!el.nextElementSibling){
-            el.parentNode.style.background="green";
-            setTimeout(function(){
-              el.parentNode.removeAttribute("style");
-              middleEach(el.nextElementSibling);
-            },500)
-          }
         },500)
       }
     }
@@ -80,9 +73,9 @@
   btn01.onclick = function(){
     fontEach(tree);
   }
-  btn02.onclick = function(){
-    middleEach(tree);
-  }
+  // btn02.onclick = function(){
+  //   middleEach(tree);
+  // }
 </script>
 </body>
 </html>
