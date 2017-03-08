@@ -1,0 +1,88 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 07</title>
+    <style type="text/css">
+      .wrap{display:-webkit-flex;display:-moz-flex;display:-ms-flex;display:-o-flex;display:flex;padding:20px;border:1px solid #ccc;width:600px;margin:20px auto;background:#fff;-webkit-transition:all .3s;-o-transition:all .3s;transition:all .3s}.item{display:-webkit-flex;display:-moz-flex;display:-ms-flex;display:-o-flex;display:flex;flex:1;padding:20px;border:1px solid #ccc;background:#fff;-webkit-transition:all .3s;-o-transition:all .3s;transition:all .3s}.item + .item{margin-left:20px}.item .item{height:60px}.btn{text-align:center;font-size:0;position:relative}.btn.disabled:after{display:block;content:'';width:100%;position:absolute;top:0;left:0;bottom:0;opacity:0;z-index:10}.btn button,.btn button:visited{font-size:14px;position:relative;outline:none;display:inline-block;padding:0 25px;line-height:30px;height:30px;border:none;background:#3bb12f;color:#fff;border-radius:5px;margin:0 5px;cursor:pointer;box-shadow:2px 2px 2px #ddd;z-index:1;-webkit-transition:all .3s;-o-transition:all .3s;transition:all .3s}.btn button:active{top:1px;box-shadow:none}.btn.disabled button{background:#ccc}
+    </style>
+  </head>
+<body>
+<div class="wrap" id="tree">
+  <div class="item">
+    <div class="item"></div>
+    <div class="item"></div>
+  </div>
+  <div class="item">
+    <div class="item"></div>
+    <div class="item"></div>
+  </div>
+</div>
+<div class="btn">
+  <button id="btn01">前序</button>
+  <button id="btn02">中序</button>
+  <button id="btn03">后序</button>
+</div>
+<script type="text/javascript">
+  var tree = document.getElementById("tree"),
+      btn = document.getElementsByClassName("btn")[0],
+      btn01 = document.getElementById("btn01"),
+      btn02 = document.getElementById("btn02"),
+      btn03 = document.getElementById("btn03");
+  //前序遍历
+  var fontEach = function(el){
+    if(!!el){
+      //禁用按钮
+      btn.className = "btn disabled";
+      el.style.background="#14a4f7";
+      //延迟500毫秒
+      setTimeout(function(){
+        el.removeAttribute("style");
+        //是否有子元素
+        if(!!el.firstElementChild){
+          //重新递归
+          fontEach(el.firstElementChild);
+        }else{
+          el.removeAttribute("style");
+          //是否有兄弟元素
+          if(!!el.nextElementSibling){
+            fontEach(el.nextElementSibling);
+          }else if(!!el.parentNode.nextElementSibling){//父级是否有兄弟元素
+            fontEach(el.parentNode.nextElementSibling);
+          }else{
+             //恢复按钮
+             btn.className = "btn";
+          };
+        };
+      },500);
+    }
+  };
+  //中序遍历
+  var middleEach = function(el){
+    if(!!el){
+      if(!!el.firstElementChild){
+        middleEach(el.firstElementChild)
+      }else{
+        el.style.background="green";
+        setTimeout(function(){
+          el.removeAttribute("style");
+          if(!!el.nextElementSibling){
+            el.parentNode.style.background="green";
+            setTimeout(function(){
+              el.parentNode.removeAttribute("style");
+              middleEach(el.nextElementSibling);
+            },500)
+          }
+        },500)
+      }
+    }
+  };
+  btn01.onclick = function(){
+    fontEach(tree);
+  }
+  btn02.onclick = function(){
+    middleEach(tree);
+  }
+</script>
+</body>
+</html>

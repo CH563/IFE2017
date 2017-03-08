@@ -65,3 +65,15 @@
 ** 遇到问题：大小时匹配时，分别对大小写相应标红，替换不成功 **
 
 [任务完成效果](http://chenliwen.tech/IFE2017/binbin/task06/index.html)   |   [源码查看](https://github.com/CH563/IFE2017/blob/master/binbin/task06/index.html)
+
+### 任务七：JavaScript和树（一）
+
+有一个input输入框，以及4个操作按钮
+
+- 在页面中展现一颗二叉树的结构
+- 点击按钮显示开始遍历，点击后，以动画的形式呈现遍历的过程和禁用按钮
+- 利用递归实现前序中序后序的二叉树的遍历算法
+- 当前被遍历到的节点变化背景色
+- 每隔500ms再遍历下一个节点
+
+[任务完成效果](http://chenliwen.tech/IFE2017/binbin/task07/index.html)   |   [源码查看](https://github.com/CH563/IFE2017/blob/master/binbin/task07/index.html)

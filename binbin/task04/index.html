@@ -32,7 +32,7 @@
         padding: 0 10px 10px;
         font-size: 0;
       }
-      .btn button{
+      .btn button,.btn button:visited{
         display: inline-block;
         border: none;
         border: 1px solid #ccc;
@@ -44,6 +44,11 @@
         margin: 0 5px;
         cursor: pointer;
         box-shadow: 2px 2px 2px #ddd;
+        outline: none;
+        position: relative;
+      }
+      .btn button:active{
+        top: 1px;
       }
       .list {
         text-align: center;
