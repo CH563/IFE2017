@@ -1,0 +1,260 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 08</title>
+    <style type="text/css">
+      .wrap {
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        padding: 10px;
+        font-size: 12px;
+        white-space: nowrap;
+        border: 1px solid #ccc;
+        /* width: 600px; */
+        margin: 10px auto;
+        background: #fff;
+        -webkit-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s
+      }
+      .item {
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background: #fff;
+        -webkit-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+        color: #333;
+      }
+      .auto{
+        flex: 0;
+      }
+      .item + .item {
+        margin-left: 10px
+      }
+      .btn {
+        text-align: center;
+        font-size: 0;
+        position: relative
+      }
+      .btn.disabled:after {
+        display: block;
+        content: '';
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        opacity: 0;
+        z-index: 10
+      }
+      .btn button, .btn button:visited {
+        font-size: 14px;
+        position: relative;
+        outline: none;
+        display: inline-block;
+        padding: 0 25px;
+        line-height: 30px;
+        height: 30px;
+        border: none;
+        background: #3bb12f;
+        color: #fff;
+        border-radius: 5px;
+        margin: 0 5px;
+        cursor: pointer;
+        box-shadow: 2px 2px 2px #ddd;
+        z-index: 1;
+        -webkit-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s
+      }
+      .btn button:active {
+        top: 1px;
+        box-shadow: none
+      }
+      .btn.disabled button {
+        background: #ccc
+      }
+      .search{
+        text-align: center;
+        padding: 10px;
+        border-top: 1px solid #eee;
+        font-size: 0;
+        margin-top: 20px;
+      }
+      .search label{
+        display: inline-block;
+        font-size: 14px;
+        color: #999;
+      }
+      .search input{
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 2px 10px;
+        line-height: 24px;
+        width: 200px;
+        font-size: 14px;
+      }
+      .search button{
+        background: #1E90FF;
+      }
+    </style>
+  </head>
+<body>
+<div class="wrap" id="tree">Super
+  <div class="item">Car
+    <div class="item">Apple
+        <div class="item">Pear</div>
+        <div class="item">Pig</div>
+        <div class="item">Cola</div>
+        <div class="item">Soccer</div>
+      </div>
+      <div class="item auto">Phone</div>
+      <div class="item">Mouse
+        <div class="item">Book</div>
+        <div class="item">School</div>
+      </div>
+  </div>
+  <div class="item">Note
+    <div class="item">Human
+        <div class="item">Code</div>
+        <div class="item">Operate</div>
+        <div class="item">Man</div>
+      </div>
+      <div class="item">Program
+        <div class="item">Bement
+          <div class="item">Cat</div>
+        </div>
+        <div class="item">Glass</div>
+      </div>
+  </div>
+  <div class="item auto">Flash</div>
+</div>
+<div class="btn">
+  <button id="btn01">前序</button>
+  <!-- <button id="btn02">中序</button>
+  <button id="btn03">后序</button> -->
+  <div class="search">
+    <label>搜索</label>
+    <input type="text" placeholder="请输入关键字..." value="" id="valS">
+    <button id="btnS">搜索</button>
+  </div>
+</div>
+<script type="text/javascript">
+  var tree = document.getElementById("tree"),
+      btn = document.getElementsByClassName("btn")[0],
+      btn01 = document.getElementById("btn01"),
+      // btn02 = document.getElementById("btn02"),
+      // btn03 = document.getElementById("btn03"),
+      btnS = document.getElementById("btnS"),
+      valS = document.getElementById("valS");
+  //前序遍历
+  var fontEach = function(el){
+    if(!!el){
+      if(el.className == "btn disabled"){
+        btn.className = "btn";
+        return false;
+      }
+      //禁用按钮
+      btn.className = "btn disabled";
+      el.style.background="#14a4f7";
+      //延迟500毫秒
+      setTimeout(function(){
+        el.removeAttribute("style");
+        //是否有子元素
+        if(!!el.firstElementChild){
+          //重新递归
+          fontEach(el.firstElementChild);
+        }else{
+          el.removeAttribute("style");
+          //是否有兄弟元素
+          if(!!el.nextElementSibling){
+            fontEach(el.nextElementSibling);
+          }else if(!!el.parentNode.nextElementSibling){//父级是否有兄弟元素
+            fontEach(el.parentNode.nextElementSibling);
+          }else if(!!el.parentNode.parentNode.nextElementSibling){
+            fontEach(el.parentNode.parentNode.nextElementSibling);
+          }else{
+             //恢复按钮
+             btn.className = "btn";
+          };
+        };
+      },500);
+    }
+  };
+
+  var searchEach = function(el){
+    if(!!el){
+      if(el.className == "btn disabled"){
+        btn.className = "btn";
+        alert("没搜索到!")
+        return false;
+      }
+      if(el.textContent.split(" ")[0].trim().toUpperCase() == valS.value.toUpperCase()){
+        console.log(el.textContent.split(" ")[0].trim().toUpperCase())
+        el.style.background="blue";
+        el.style.color="#fff";
+        btn.className = "btn";
+        return false;
+      }
+      //禁用按钮
+      btn.className = "btn disabled";
+      el.style.background="#14a4f7";
+      //延迟500毫秒
+      setTimeout(function(){
+        el.removeAttribute("style");
+        //是否有子元素
+        if(!!el.firstElementChild){
+          //重新递归
+          searchEach(el.firstElementChild);
+        }else{
+          el.removeAttribute("style");
+          //是否有兄弟元素
+          if(!!el.nextElementSibling){
+            searchEach(el.nextElementSibling);
+          }else if(!!el.parentNode.nextElementSibling){//父级是否有兄弟元素
+            searchEach(el.parentNode.nextElementSibling);
+          }else if(!!el.parentNode.parentNode.nextElementSibling){
+            searchEach(el.parentNode.parentNode.nextElementSibling);
+          }else{
+             //恢复按钮
+             btn.className = "btn";
+          };
+        };
+      },500);
+    }
+  };
+  //前序调用
+  btn01.onclick = function(){
+    fontEach(tree);
+  }
+  // //中序调用
+  // btn02.onclick = function(){
+  //   fontEach(tree);
+  // }
+  // //后序调用
+  // btn03.onclick = function(){
+  //   fontEach(tree);
+  // }
+  //搜索
+  btnS.onclick = function(){
+    if(valS.value.trim().length < 1){
+      alert("输入关键字!")
+      return false;
+    }
+    searchEach(tree);
+  }
+</script>
+</body>
+</html>
