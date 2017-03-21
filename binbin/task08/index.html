@@ -142,119 +142,142 @@
   <div class="item auto">Flash</div>
 </div>
 <div class="btn">
-  <button id="btn01">前序</button>
-  <!-- <button id="btn02">中序</button>
-  <button id="btn03">后序</button> -->
+  <button id="btn01">深度遍历</button>
+  <button id="btn02">广度优先</button>
+  <!-- <button id="btn03">后序</button> -->
   <div class="search">
     <label>搜索</label>
     <input type="text" placeholder="请输入关键字..." value="" id="valS">
-    <button id="btnS">搜索</button>
+    <button id="btnS01">深度搜索</button>
+    <button id="btnS02">广度搜索</button>
   </div>
 </div>
 <script type="text/javascript">
   var tree = document.getElementById("tree"),
       btn = document.getElementsByClassName("btn")[0],
       btn01 = document.getElementById("btn01"),
-      // btn02 = document.getElementById("btn02"),
-      // btn03 = document.getElementById("btn03"),
-      btnS = document.getElementById("btnS"),
-      valS = document.getElementById("valS");
-  //前序遍历
-  var fontEach = function(el){
-    if(!!el){
-      if(el.className == "btn disabled"){
-        btn.className = "btn";
-        return false;
+      btn02 = document.getElementById("btn02"),
+      btnS01 = document.getElementById("btnS01"),
+      btnS02 = document.getElementById("btnS02"),
+      valS = document.getElementById("valS"),
+      divList=[],
+      BFindex=0,
+      timer = null;
+  //深度遍历
+  function preOrder(node) {
+    if(node!=null) {
+      divList.push(node);
+      for(var i=0;i<node.children.length;i++) {
+        preOrder(node.children[i]);
       }
-      //禁用按钮
-      btn.className = "btn disabled";
-      el.style.background="#14a4f7";
-      //延迟500毫秒
-      setTimeout(function(){
-        el.removeAttribute("style");
-        //是否有子元素
-        if(!!el.firstElementChild){
-          //重新递归
-          fontEach(el.firstElementChild);
-        }else{
-          el.removeAttribute("style");
-          //是否有兄弟元素
-          if(!!el.nextElementSibling){
-            fontEach(el.nextElementSibling);
-          }else if(!!el.parentNode.nextElementSibling){//父级是否有兄弟元素
-            fontEach(el.parentNode.nextElementSibling);
-          }else if(!!el.parentNode.parentNode.nextElementSibling){
-            fontEach(el.parentNode.parentNode.nextElementSibling);
-          }else{
-             //恢复按钮
-             btn.className = "btn";
-          };
-        };
-      },500);
     }
-  };
+  }
+  // 广度优先
+    function postOrder(node) {
+      if(node) {
+          divList.push(node);
+          if(node.nextElementSibling && node.nextElementSibling.className != "btn"){
 
-  var searchEach = function(el){
-    if(!!el){
-      if(el.className == "btn disabled"){
-        btn.className = "btn";
-        alert("没搜索到!")
-        return false;
+            postOrder(node.nextElementSibling);
+          }
+          // if(node.nextElementSibling.className == "item"){
+          // }
+          node = divList[BFindex++];  //创建的标志符
+          postOrder(node.firstElementChild);
+        }
+    }
+    // 停止遍历
+    stop.onclick = function () {
+      innit();
+    }
+
+    // 初始界面
+    function innit() {
+      divList=[];
+      BFindex=0;
+      clearInterval(timer);
+      for(var i=0;i<tree.children.length;i++) {
+        tree.children[i].removeAttribute("style");
       }
-      if(el.textContent.split(" ")[0].trim().toUpperCase() == valS.value.toUpperCase()){
-        console.log(el.textContent.split(" ")[0].trim().toUpperCase())
-        el.style.background="blue";
-        el.style.color="#fff";
-        btn.className = "btn";
-        return false;
-      }
-      //禁用按钮
-      btn.className = "btn disabled";
-      el.style.background="#14a4f7";
-      //延迟500毫秒
-      setTimeout(function(){
-        el.removeAttribute("style");
-        //是否有子元素
-        if(!!el.firstElementChild){
-          //重新递归
-          searchEach(el.firstElementChild);
-        }else{
-          el.removeAttribute("style");
-          //是否有兄弟元素
-          if(!!el.nextElementSibling){
-            searchEach(el.nextElementSibling);
-          }else if(!!el.parentNode.nextElementSibling){//父级是否有兄弟元素
-            searchEach(el.parentNode.nextElementSibling);
-          }else if(!!el.parentNode.parentNode.nextElementSibling){
-            searchEach(el.parentNode.parentNode.nextElementSibling);
-          }else{
-             //恢复按钮
-             btn.className = "btn";
-          };
-        };
+    }
+
+    // 改变背景色
+    function change() {
+      var i = 0,
+        len = divList.length;
+      divList[i].style.background="#14a4f7";
+      timer =setInterval(function() {
+        i++;
+        if(i < len) {
+          divList[i-1].removeAttribute("style");
+          divList[i].style.background="#14a4f7";
+        } else {
+          clearInterval(timer);
+          divList[len-1].removeAttribute("style");
+        }
       },500);
     }
-  };
-  //前序调用
-  btn01.onclick = function(){
-    fontEach(tree);
-  }
-  // //中序调用
-  // btn02.onclick = function(){
-  //   fontEach(tree);
-  // }
-  // //后序调用
-  // btn03.onclick = function(){
-  //   fontEach(tree);
-  // }
-  //搜索
-  btnS.onclick = function(){
-    if(valS.value.trim().length < 1){
-      alert("输入关键字!")
-      return false;
+    //查询
+    function search() {
+      var i = 0;
+      var lock = false;
+      timer = setInterval(function(argument){
+        if (i>0) {
+          if (divList[i-1].firstChild.nodeValue.trim().toLowerCase() == valS.value.toLowerCase()) {
+            divList[i-1].style.background = 'yellow';
+          }else{
+            divList[i-1].removeAttribute("style");
+          }
+        }
+        if (i == divList.length) {
+          clearInterval(timer);
+          if (lock) {
+            alert('已找到');
+            return false;
+          } else {
+            alert('未找到');
+            return false;
+          }
+        }
+        if (valS.value == "") {
+          alert('请输入搜索值！');
+          clearInterval(timer);
+        }
+        else {
+          console.log(divList[i].firstChild.nodeValue.trim());
+          console.log(valS.value);
+          if (divList[i].firstChild.nodeValue.trim().toLowerCase() == valS.value.toLowerCase()) {
+            divList[i].style.background = 'yellow';
+            i++;
+            lock = true;
+          }else{
+            divList[i].style.background = 'red';
+            i++;
+          }
+        }
+      },500)
     }
-    searchEach(tree);
-  }
+    //事件
+    btn01.onclick = function(){
+      innit();
+      preOrder(tree);
+      change();
+    }
+    btn02.onclick = function(){
+      innit();
+      postOrder(tree);
+      change();
+    }
+    btnS01.onclick = function(){
+      innit();
+      preOrder(tree);
+      search();
+    }
+    btnS02.onclick = function(){
+      innit();
+      postOrder(tree);
+      search();
+    }
 </script>
 </body>
 </html>
