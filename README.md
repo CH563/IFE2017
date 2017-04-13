@@ -86,3 +86,16 @@
 - 增加一个输入框及一个“查询”按钮，点击按钮时，开始在树中以动画形式查找节点内容和输入框中内容一致的节点，找到后以特殊样式显示该节点，找不到的话给出找不到的提示。查询过程中的展示过程和遍历过程保持一致
 
 [任务完成效果](http://chenliwen.tech/IFE2017/binbin/task08/index.html)   |   [源码查看](https://github.com/CH563/IFE2017/blob/master/binbin/task08/index.html)
+
+
+
+## 耀耀学院
+
+### 任务一：表单（一）单个表单项的检验
+
+校验规则：
+- 1.字符数为4~16位
+- 2.每个英文字母、数字、英文符号长度为1
+- 3.每个汉字，中文符号长度为2
+
+[任务完成效果](http://chenliwen.tech/IFE2017/yaoyao/task01/index.html)   |   [源码查看](https://github.com/CH563/IFE2017/blob/master/yaoyao/task01/index.html)

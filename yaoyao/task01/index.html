@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      .container{
+        width:750px;
+        margin:20px auto;
+        border:1px solid #ddd;
+        border-radius: 5px;
+        padding:20px;
+      }
+      .row{
+        overflow: hidden;
+        clear: both;
+        margin-bottom: 15px;
+      }
+      .form-label{
+        width:100px;
+        float:left;
+        line-height: 42px;
+        text-align: right;
+      }
+      .form-input{
+        float: left;
+        padding:0 15px;
+      }
+      .input-contrl{
+        border:1px solid #ccc;
+        padding:10px;
+        line-height: 20px;
+        width:400px;
+        height: 20px;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+      .form-info{
+        font-size: 14px;
+        color:#aaa;
+        padding-top: 10px;
+      }
+      .form-btn{
+        float:left;
+      }
+      .btn{
+        border:none;
+        padding:0 25px;
+        border-radius: 5px;
+        height: 42px;
+        line-height: 42px;
+        cursor: pointer;
+        color:#fff;
+        background: #0d7bea;
+        font-size: 14px;
+      }
+      .input-contrl.red{
+        border-color:#d20f38;
+      }
+      .input-contrl.green{
+        border-color:#44b52e;
+      }
+      .form-info.red{
+        color:#d20f38;
+      }
+      .form-info.green{
+        color:#44b52e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <label class="form-label">名称：</label>
+        <div class="form-input">
+          <input type="text" placeholder="请输入" class="input-contrl" >
+          <div class="form-info">必填，长度为4~16字符</div>
+        </div>
+        <div class="form-btn">
+          <button class="btn">验证</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.onload = function(){
+        var btn = document.querySelector(".btn");
+        var input = document.querySelector(".input-contrl");
+        var info = document.querySelector(".form-info");
+        btn.onclick = function(){
+          var value = input.value.trim();
+          if(/\w{4,6}/.test(value)){
+            input.classList = "input-contrl green";
+            info.innerHTML = "姓名填写正确";
+            info.classList = "form-info green";
+          }else{
+            input.classList = "input-contrl red";
+            info.innerHTML="姓名填写错误";
+            info.classList = "form-info red";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
