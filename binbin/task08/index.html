@@ -1,283 +1,298 @@
 <!DOCTYPE>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>IFE JavaScript Task 08</title>
     <style type="text/css">
-      .wrap {
-        display: -webkit-flex;
-        display: -moz-flex;
-        display: -ms-flex;
-        display: -o-flex;
-        display: flex;
-        padding: 10px;
-        font-size: 12px;
-        white-space: nowrap;
-        border: 1px solid #ccc;
-        /* width: 600px; */
-        margin: 10px auto;
-        background: #fff;
-        -webkit-transition: all .3s;
-        -o-transition: all .3s;
-        transition: all .3s
-      }
-      .item {
-        display: -webkit-flex;
-        display: -moz-flex;
-        display: -ms-flex;
-        display: -o-flex;
-        display: flex;
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ccc;
-        background: #fff;
-        -webkit-transition: all .3s;
-        -o-transition: all .3s;
-        transition: all .3s;
-        color: #333;
-      }
-      .auto{
-        flex: 0;
-      }
-      .item + .item {
-        margin-left: 10px
-      }
-      .btn {
-        text-align: center;
-        font-size: 0;
-        position: relative
-      }
-      .btn.disabled:after {
-        display: block;
-        content: '';
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        opacity: 0;
-        z-index: 10
-      }
-      .btn button, .btn button:visited {
-        font-size: 14px;
-        position: relative;
-        outline: none;
-        display: inline-block;
-        padding: 0 25px;
-        line-height: 30px;
-        height: 30px;
-        border: none;
-        background: #3bb12f;
-        color: #fff;
-        border-radius: 5px;
-        margin: 0 5px;
-        cursor: pointer;
-        box-shadow: 2px 2px 2px #ddd;
-        z-index: 1;
-        -webkit-transition: all .3s;
-        -o-transition: all .3s;
-        transition: all .3s
-      }
-      .btn button:active {
-        top: 1px;
-        box-shadow: none
-      }
-      .btn.disabled button {
-        background: #ccc
-      }
-      .search{
-        text-align: center;
-        padding: 10px;
-        border-top: 1px solid #eee;
-        font-size: 0;
-        margin-top: 20px;
-      }
-      .search label{
-        display: inline-block;
-        font-size: 14px;
-        color: #999;
-      }
-      .search input{
-        margin: 0 5px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        padding: 2px 10px;
-        line-height: 24px;
-        width: 200px;
-        font-size: 14px;
-      }
-      .search button{
-        background: #1E90FF;
-      }
+        .wrap {
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+            padding: 10px;
+            font-size: 12px;
+            white-space: nowrap;
+            border: 1px solid #ccc;
+            /* width: 600px; */
+            margin: 10px auto;
+            background: #fff;
+            -webkit-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s
+        }
+
+        .item {
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: #fff;
+            -webkit-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s;
+            color: #333;
+        }
+
+        .auto {
+            flex: 0;
+        }
+
+        .item+.item {
+            margin-left: 10px
+        }
+
+        .btn {
+            text-align: center;
+            font-size: 0;
+            position: relative
+        }
+
+        .btn.disabled:after {
+            display: block;
+            content: '';
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            opacity: 0;
+            z-index: 10
+        }
+
+        .btn button,
+        .btn button:visited {
+            font-size: 14px;
+            position: relative;
+            outline: none;
+            display: inline-block;
+            padding: 0 25px;
+            line-height: 30px;
+            height: 30px;
+            border: none;
+            background: #3bb12f;
+            color: #fff;
+            border-radius: 5px;
+            margin: 0 5px;
+            cursor: pointer;
+            box-shadow: 2px 2px 2px #ddd;
+            z-index: 1;
+            -webkit-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s
+        }
+
+        .btn button:active {
+            top: 1px;
+            box-shadow: none
+        }
+
+        .btn.disabled button {
+            background: #ccc
+        }
+
+        .search {
+            text-align: center;
+            padding: 10px;
+            border-top: 1px solid #eee;
+            font-size: 0;
+            margin-top: 20px;
+        }
+
+        .search label {
+            display: inline-block;
+            font-size: 14px;
+            color: #999;
+        }
+
+        .search input {
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 2px 10px;
+            line-height: 24px;
+            width: 200px;
+            font-size: 14px;
+        }
+
+        .search button {
+            background: #1E90FF;
+        }
     </style>
-  </head>
+</head>
+
 <body>
-<div class="wrap" id="tree">Super
-  <div class="item">Car
-    <div class="item">Apple
-        <div class="item">Pear</div>
-        <div class="item">Pig</div>
-        <div class="item">Cola</div>
-        <div class="item">Soccer</div>
-      </div>
-      <div class="item auto">Phone</div>
-      <div class="item">Mouse
-        <div class="item">Book</div>
-        <div class="item">School</div>
-      </div>
-  </div>
-  <div class="item">Note
-    <div class="item">Human
-        <div class="item">Code</div>
-        <div class="item">Operate</div>
-        <div class="item">Man</div>
-      </div>
-      <div class="item">Program
-        <div class="item">Bement
-          <div class="item">Cat</div>
+    <div class="wrap" id="tree">Super
+        <div class="item">Car
+            <div class="item">Apple
+                <div class="item">Pear</div>
+                <div class="item">Pig</div>
+                <div class="item">Cola</div>
+                <div class="item">Soccer</div>
+            </div>
+            <div class="item auto">Phone</div>
+            <div class="item">Mouse
+                <div class="item">Book</div>
+                <div class="item">School</div>
+            </div>
         </div>
-        <div class="item">Glass</div>
-      </div>
-  </div>
-  <div class="item auto">Flash</div>
-</div>
-<div class="btn">
-  <button id="btn01">深度遍历</button>
-  <button id="btn02">广度优先</button>
-  <!-- <button id="btn03">后序</button> -->
-  <div class="search">
-    <label>搜索</label>
-    <input type="text" placeholder="请输入关键字..." value="" id="valS">
-    <button id="btnS01">深度搜索</button>
-    <button id="btnS02">广度搜索</button>
-  </div>
-</div>
-<script type="text/javascript">
-  var tree = document.getElementById("tree"),
-      btn = document.getElementsByClassName("btn")[0],
-      btn01 = document.getElementById("btn01"),
-      btn02 = document.getElementById("btn02"),
-      btnS01 = document.getElementById("btnS01"),
-      btnS02 = document.getElementById("btnS02"),
-      valS = document.getElementById("valS"),
-      divList=[],
-      BFindex=0,
-      timer = null;
-  //深度遍历
-  function preOrder(node) {
-    if(node!=null) {
-      divList.push(node);
-      for(var i=0;i<node.children.length;i++) {
-        preOrder(node.children[i]);
-      }
-    }
-  }
-  // 广度优先
-    function postOrder(node) {
-      if(node) {
-          divList.push(node);
-          if(node.nextElementSibling && node.nextElementSibling.className != "btn"){
+        <div class="item">Note
+            <div class="item">Human
+                <div class="item">Code</div>
+                <div class="item">Operate</div>
+                <div class="item">Man</div>
+            </div>
+            <div class="item">Program
+                <div class="item">Bement
+                    <div class="item">Cat</div>
+                </div>
+                <div class="item">Glass</div>
+            </div>
+        </div>
+        <div class="item auto">Flash</div>
+    </div>
+    <div class="btn">
+        <button id="btn01">深度遍历</button>
+        <button id="btn02">广度优先</button>
+        <!-- <button id="btn03">后序</button> -->
+        <div class="search">
+            <label>搜索</label>
+            <input type="text" placeholder="请输入关键字..." value="" id="valS">
+            <button id="btnS01">深度搜索</button>
+            <button id="btnS02">广度搜索</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var tree = document.getElementById("tree"),
+            btn = document.getElementsByClassName("btn")[0],
+            btn01 = document.getElementById("btn01"),
+            btn02 = document.getElementById("btn02"),
+            btnS01 = document.getElementById("btnS01"),
+            btnS02 = document.getElementById("btnS02"),
+            valS = document.getElementById("valS"),
+            divList = [],
+            BFindex = 0,
+            timer = null;
+        //深度遍历
+        function preOrder(node) {
+            if (node != null) {
+                divList.push(node);
+                for (var i = 0; i < node.children.length; i++) {
+                    preOrder(node.children[i]);
+                }
+            }
+        }
+        // 广度优先
+        function postOrder(node) {
+            if (node) {
+                divList.push(node);
+                if (node.nextElementSibling && node.nextElementSibling.className != "btn") {
 
-            postOrder(node.nextElementSibling);
-          }
-          // if(node.nextElementSibling.className == "item"){
-          // }
-          node = divList[BFindex++];  //创建的标志符
-          postOrder(node.firstElementChild);
+                    postOrder(node.nextElementSibling);
+                }
+                // if(node.nextElementSibling.className == "item"){
+                // }
+                node = divList[BFindex++]; //创建的标志符
+                postOrder(node.firstElementChild);
+            }
         }
-    }
-    // 停止遍历
-    stop.onclick = function () {
-      innit();
-    }
+        // 停止遍历
+        stop.onclick = function () {
+            innit();
+        }
 
-    // 初始界面
-    function innit() {
-      divList=[];
-      BFindex=0;
-      clearInterval(timer);
-      for(var i=0;i<tree.children.length;i++) {
-        tree.children[i].removeAttribute("style");
-      }
-    }
+        // 初始界面
+        function innit() {
+            divList = [];
+            BFindex = 0;
+            clearInterval(timer);
+            for (var i = 0; i < tree.children.length; i++) {
+                tree.children[i].removeAttribute("style");
+            }
+        }
 
-    // 改变背景色
-    function change() {
-      var i = 0,
-        len = divList.length;
-      divList[i].style.background="#14a4f7";
-      timer =setInterval(function() {
-        i++;
-        if(i < len) {
-          divList[i-1].removeAttribute("style");
-          divList[i].style.background="#14a4f7";
-        } else {
-          clearInterval(timer);
-          divList[len-1].removeAttribute("style");
+        // 改变背景色
+        function change() {
+            var i = 0,
+                len = divList.length;
+            divList[i].style.background = "#14a4f7";
+            timer = setInterval(function () {
+                i++;
+                if (i < len) {
+                    divList[i - 1].removeAttribute("style");
+                    divList[i].style.background = "#14a4f7";
+                } else {
+                    clearInterval(timer);
+                    divList[len - 1].removeAttribute("style");
+                }
+            }, 500);
         }
-      },500);
-    }
-    //查询
-    function search() {
-      var i = 0;
-      var lock = false;
-      timer = setInterval(function(argument){
-        if (i>0) {
-          if (divList[i-1].firstChild.nodeValue.trim().toLowerCase() == valS.value.toLowerCase()) {
-            divList[i-1].style.background = 'yellow';
-          }else{
-            divList[i-1].removeAttribute("style");
-          }
+        //查询
+        function search() {
+            var i = 0;
+            var lock = false;
+            timer = setInterval(function (argument) {
+                if (i > 0) {
+                    if (divList[i - 1].firstChild.nodeValue.trim().toLowerCase() == valS.value.toLowerCase()) {
+                        divList[i - 1].style.background = 'yellow';
+                    } else {
+                        divList[i - 1].removeAttribute("style");
+                    }
+                }
+                if (i == divList.length) {
+                    clearInterval(timer);
+                    if (lock) {
+                        alert('已找到');
+                        return false;
+                    } else {
+                        alert('未找到');
+                        return false;
+                    }
+                }
+                if (valS.value == "") {
+                    alert('请输入搜索值！');
+                    clearInterval(timer);
+                } else {
+                    console.log(divList[i].firstChild.nodeValue.trim());
+                    console.log(valS.value);
+                    if (divList[i].firstChild.nodeValue.trim().toLowerCase() == valS.value.toLowerCase()) {
+                        divList[i].style.background = 'yellow';
+                        i++;
+                        lock = true;
+                    } else {
+                        divList[i].style.background = 'red';
+                        i++;
+                    }
+                }
+            }, 500)
         }
-        if (i == divList.length) {
-          clearInterval(timer);
-          if (lock) {
-            alert('已找到');
-            return false;
-          } else {
-            alert('未找到');
-            return false;
-          }
+        //事件
+        btn01.onclick = function () {
+            innit();
+            preOrder(tree);
+            change();
         }
-        if (valS.value == "") {
-          alert('请输入搜索值！');
-          clearInterval(timer);
+        btn02.onclick = function () {
+            innit();
+            postOrder(tree);
+            change();
         }
-        else {
-          console.log(divList[i].firstChild.nodeValue.trim());
-          console.log(valS.value);
-          if (divList[i].firstChild.nodeValue.trim().toLowerCase() == valS.value.toLowerCase()) {
-            divList[i].style.background = 'yellow';
-            i++;
-            lock = true;
-          }else{
-            divList[i].style.background = 'red';
-            i++;
-          }
+        btnS01.onclick = function () {
+            innit();
+            preOrder(tree);
+            search();
         }
-      },500)
-    }
-    //事件
-    btn01.onclick = function(){
-      innit();
-      preOrder(tree);
-      change();
-    }
-    btn02.onclick = function(){
-      innit();
-      postOrder(tree);
-      change();
-    }
-    btnS01.onclick = function(){
-      innit();
-      preOrder(tree);
-      search();
-    }
-    btnS02.onclick = function(){
-      innit();
-      postOrder(tree);
-      search();
-    }
-</script>
+        btnS02.onclick = function () {
+            innit();
+            postOrder(tree);
+            search();
+        }
+    </script>
 </body>
+
 </html>
