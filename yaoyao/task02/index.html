@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      width: 750px;
+      margin: 20px auto;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+    }
+    
+    .row {
+      clear: both;
+      margin-bottom: 15px;
+    }
+    .row:after{
+      display: table;
+      content: "";
+      clear: both;
+      overflow: hidden;
+    }
+    
+    .form-label {
+      width: 100px;
+      float: left;
+      line-height: 42px;
+      text-align: right;
+    }
+    
+    .form-input {
+      margin-left: 120px;
+      padding: 0 15px;
+    }
+    
+    .input-contrl {
+      border: 1px solid #ccc;
+      padding: 10px;
+      line-height: 20px;
+      width: 578px;
+      height: 20px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    
+    .form-info {
+      font-size: 14px;
+      color: #aaa;
+      padding-top: 10px;
+    }
+    
+    .form-btn {
+      text-align: right;
+      padding:15px;
+    }
+    
+    .btn {
+      border: none;
+      padding: 0 25px;
+      border-radius: 5px;
+      height: 42px;
+      line-height: 42px;
+      cursor: pointer;
+      color: #fff;
+      background: #0d7bea;
+      font-size: 14px;
+    }
+    
+    .input-contrl.red {
+      border-color: #d20f38;
+    }
+    
+    .input-contrl.green {
+      border-color: #44b52e;
+    }
+    
+    .form-info.red {
+      color: #d20f38;
+    }
+    
+    .form-info.green {
+      color: #44b52e;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <label class="form-label">名称：</label>
+      <div class="form-input">
+        <input type="text" placeholder="请输入" class="input-contrl">
+        <div class="form-info">必填，长度为4~16字符</div>
+      </div>
+    </div>
+    <div class="row">
+      <label class="form-label">密码：</label>
+      <div class="form-input">
+        <input type="password" placeholder="请输入" class="input-contrl">
+      </div>
+    </div>
+    <div class="row">
+      <label class="form-label">确认密码：</label>
+      <div class="form-input">
+        <input type="password" placeholder="请输入" class="input-contrl">
+      </div>
+    </div>
+    <div class="row">
+      <label class="form-label">邮箱：</label>
+      <div class="form-input">
+        <input type="text" placeholder="请输入" class="input-contrl">
+      </div>
+    </div>
+    <div class="row">
+      <label class="form-label">手机：</label>
+      <div class="form-input">
+        <input type="tel" placeholder="请输入" class="input-contrl">
+      </div>
+    </div>
+    <div class="form-btn">
+      <button class="btn">验证</button>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      var btn = document.querySelector(".btn");
+      var input = document.querySelector(".input-contrl");
+      var info = document.querySelector(".form-info");
+      btn.onclick = function () {
+        var value = input.value.trim();
+        if (!!value) {
+          var arr = value.split('');
+          var num = 0;
+          for (var i = 0; i < arr.length; i++) {
+            if (arr[i].charCodeAt() < 128) { //字符编码<128，为英文字符
+              num++; //长度+1 
+            } else {
+              num += 2; //否则长度+2 
+            }
+          }
+          if (num > 3 && num < 17) {
+            input.classList = "input-contrl green";
+            info.innerHTML = "姓名填写正确";
+            info.classList = "form-info green";
+          } else {
+            input.classList = "input-contrl red";
+            info.innerHTML = "姓名格式错误";
+            info.classList = "form-info red";
+          }
+        } else {
+          input.classList = "input-contrl red";
+          info.innerHTML = "姓名不能为空";
+          info.classList = "form-info red";
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
