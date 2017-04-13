@@ -92,13 +92,28 @@
         var info = document.querySelector(".form-info");
         btn.onclick = function(){
           var value = input.value.trim();
-          if(/\w{4,6}/.test(value)){
-            input.classList = "input-contrl green";
-            info.innerHTML = "姓名填写正确";
-            info.classList = "form-info green";
+          if(!!value){
+            var arr = value.split('');
+            var num = 0;
+            for (var i = 0; i < arr.length; i++) {
+              if (arr[i].charCodeAt() < 128) { //字符编码<128，为英文字符
+                num++; //长度+1 
+              }else {
+                num +=2 ; //否则长度+2 
+              } 
+            }
+            if(num >3 && num <17){
+              input.classList = "input-contrl green";
+              info.innerHTML = "姓名填写正确";
+              info.classList = "form-info green";
+            }else{
+              input.classList = "input-contrl red";
+              info.innerHTML="姓名格式错误";
+              info.classList = "form-info red";
+            }
           }else{
             input.classList = "input-contrl red";
-            info.innerHTML="姓名填写错误";
+            info.innerHTML="姓名不能为空";
             info.classList = "form-info red";
           }
         }
