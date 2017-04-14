@@ -95,34 +95,34 @@
 <body>
   <div class="container">
     <div class="row">
-      <label class="form-label">名称：</label>
+      <label class="form-label" for="name">名称：</label>
       <div class="form-input">
-        <input type="text" placeholder="请输入" class="input-contrl">
-        <div class="form-info">必填，长度为4~16字符</div>
+        <input type="text" placeholder="请输入" class="input-contrl" id="name">
+        <!--<div class="form-info">必填，长度为4~16字符</div>-->
       </div>
     </div>
     <div class="row">
       <label class="form-label">密码：</label>
       <div class="form-input">
-        <input type="password" placeholder="请输入" class="input-contrl">
+        <input type="password" placeholder="请输入" class="input-contrl" id="password">
       </div>
     </div>
     <div class="row">
       <label class="form-label">确认密码：</label>
       <div class="form-input">
-        <input type="password" placeholder="请输入" class="input-contrl">
+        <input type="password" placeholder="请输入" class="input-contrl" id="password2">
       </div>
     </div>
     <div class="row">
       <label class="form-label">邮箱：</label>
       <div class="form-input">
-        <input type="text" placeholder="请输入" class="input-contrl">
+        <input type="text" placeholder="请输入" class="input-contrl" id="mail">
       </div>
     </div>
     <div class="row">
       <label class="form-label">手机：</label>
       <div class="form-input">
-        <input type="tel" placeholder="请输入" class="input-contrl">
+        <input type="tel" placeholder="请输入" class="input-contrl" id="phone">
       </div>
     </div>
     <div class="form-btn">
@@ -131,37 +131,46 @@
   </div>
   <script>
     window.onload = function () {
-      var btn = document.querySelector(".btn");
-      var input = document.querySelector(".input-contrl");
-      var info = document.querySelector(".form-info");
-      btn.onclick = function () {
-        var value = input.value.trim();
-        if (!!value) {
-          var arr = value.split('');
-          var num = 0;
-          for (var i = 0; i < arr.length; i++) {
-            if (arr[i].charCodeAt() < 128) { //字符编码<128，为英文字符
-              num++; //长度+1 
-            } else {
-              num += 2; //否则长度+2 
+      var name = document.getElementById("name");
+      var password = document.getElementById("password");
+      var password2 = document.getElementById("password2");
+      function validate (input,term){
+        input.onfocus = function(){
+          if(!!input.value.trim()){
+            return;            
+          }
+          var div = document.createElement("div");
+          input.nextSibling.remove();
+          input.after(div);
+          div.innerText="必填，长度为4~16字符";
+          div.setAttribute("class","form-info");
+        };
+        input.onblur = function(){
+          var value = input.value.trim();
+          if(!!value){
+            console.log(value)
+            if(term.test(value)){
+              input.classList = "input-contrl green";
+              input.nextSibling.classList = "form-info green";
+              input.nextSibling.innerHTML="填写正确"
+            }else{
+              input.classList = "input-contrl red";
+              input.nextSibling.classList = "form-info red";
+              input.nextSibling.innerHTML="填写错误";
             }
-          }
-          if (num > 3 && num < 17) {
-            input.classList = "input-contrl green";
-            info.innerHTML = "姓名填写正确";
-            info.classList = "form-info green";
-          } else {
+          }else{
             input.classList = "input-contrl red";
-            info.innerHTML = "姓名格式错误";
-            info.classList = "form-info red";
-          }
-        } else {
-          input.classList = "input-contrl red";
-          info.innerHTML = "姓名不能为空";
-          info.classList = "form-info red";
-        }
-      }
-    }
+            input.nextSibling.classList = "form-info red";
+            input.nextSibling.innerHTML="不能为空";
+          };
+        };
+      };
+      validate(name,/\d{4,16}/);
+      validate(password,/\d{4,16}/);
+      validate(password2, /\d{4,16}/);
+      validate(mail, /\d{4,16}/);
+      validate(phone, /^1+\d{10}/);
+    };
   </script>
 </body>
 
